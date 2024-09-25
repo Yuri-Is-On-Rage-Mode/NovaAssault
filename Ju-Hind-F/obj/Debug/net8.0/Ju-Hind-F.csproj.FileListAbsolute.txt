@@ -1,0 +1,14 @@
+G:\fri3nds\v-category-projects\Developer-Grade-Virtual-OS\Ju-hind-F\Ju-Hind-F\Ju-Hind-F\bin\Debug\net8.0\Ju-Hind-F.exe
+G:\fri3nds\v-category-projects\Developer-Grade-Virtual-OS\Ju-hind-F\Ju-Hind-F\Ju-Hind-F\bin\Debug\net8.0\Ju-Hind-F.deps.json
+G:\fri3nds\v-category-projects\Developer-Grade-Virtual-OS\Ju-hind-F\Ju-Hind-F\Ju-Hind-F\bin\Debug\net8.0\Ju-Hind-F.runtimeconfig.json
+G:\fri3nds\v-category-projects\Developer-Grade-Virtual-OS\Ju-hind-F\Ju-Hind-F\Ju-Hind-F\bin\Debug\net8.0\Ju-Hind-F.dll
+G:\fri3nds\v-category-projects\Developer-Grade-Virtual-OS\Ju-hind-F\Ju-Hind-F\Ju-Hind-F\bin\Debug\net8.0\Ju-Hind-F.pdb
+G:\fri3nds\v-category-projects\Developer-Grade-Virtual-OS\Ju-hind-F\Ju-Hind-F\Ju-Hind-F\obj\Debug\net8.0\Ju-Hind-F.GeneratedMSBuildEditorConfig.editorconfig
+G:\fri3nds\v-category-projects\Developer-Grade-Virtual-OS\Ju-hind-F\Ju-Hind-F\Ju-Hind-F\obj\Debug\net8.0\Ju-Hind-F.AssemblyInfoInputs.cache
+G:\fri3nds\v-category-projects\Developer-Grade-Virtual-OS\Ju-hind-F\Ju-Hind-F\Ju-Hind-F\obj\Debug\net8.0\Ju-Hind-F.AssemblyInfo.cs
+G:\fri3nds\v-category-projects\Developer-Grade-Virtual-OS\Ju-hind-F\Ju-Hind-F\Ju-Hind-F\obj\Debug\net8.0\Ju-Hind-F.csproj.CoreCompileInputs.cache
+G:\fri3nds\v-category-projects\Developer-Grade-Virtual-OS\Ju-hind-F\Ju-Hind-F\Ju-Hind-F\obj\Debug\net8.0\Ju-Hind-F.dll
+G:\fri3nds\v-category-projects\Developer-Grade-Virtual-OS\Ju-hind-F\Ju-Hind-F\Ju-Hind-F\obj\Debug\net8.0\refint\Ju-Hind-F.dll
+G:\fri3nds\v-category-projects\Developer-Grade-Virtual-OS\Ju-hind-F\Ju-Hind-F\Ju-Hind-F\obj\Debug\net8.0\Ju-Hind-F.pdb
+G:\fri3nds\v-category-projects\Developer-Grade-Virtual-OS\Ju-hind-F\Ju-Hind-F\Ju-Hind-F\obj\Debug\net8.0\Ju-Hind-F.genruntimeconfig.cache
+G:\fri3nds\v-category-projects\Developer-Grade-Virtual-OS\Ju-hind-F\Ju-Hind-F\Ju-Hind-F\obj\Debug\net8.0\ref\Ju-Hind-F.dll
