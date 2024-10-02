@@ -1,8 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "KB6Zzor/eyg=",
+  "dgSpecHash": "U/RzgXJpyoM=",
   "success": true,
   "projectFilePath": "G:\\fri3nds\\v-category-projects\\Developer-Grade-Virtual-OS\\Ju-hind-F\\Ju-Hind-F\\Ju-Hind-F\\Ju-Hind-F.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Hamza\\.nuget\\packages\\csvhelper\\33.0.1\\csvhelper.33.0.1.nupkg.sha512",
+    "C:\\Users\\Hamza\\.nuget\\packages\\htmlagilitypack\\1.11.66\\htmlagilitypack.1.11.66.nupkg.sha512",
+    "C:\\Users\\Hamza\\.nuget\\packages\\mongodb.bson\\2.29.0\\mongodb.bson.2.29.0.nupkg.sha512",
+    "C:\\Users\\Hamza\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
+    "C:\\Users\\Hamza\\.nuget\\packages\\system.memory\\4.5.5\\system.memory.4.5.5.nupkg.sha512",
+    "C:\\Users\\Hamza\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\5.0.0\\system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512",
+    "C:\\Users\\Hamza\\.nuget\\packages\\tomlyn\\0.17.0\\tomlyn.0.17.0.nupkg.sha512"
+  ],
   "logs": []
 }

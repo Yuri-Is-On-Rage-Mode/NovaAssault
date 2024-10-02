@@ -6,6 +6,53 @@
 <img src="./Untitled2.png"></img>
 
 
+## Version 2.1 (2/10/2024) Uploaded On (3~5/10/2024)
+> #### **Welcome to the **NovaAssault Shell**—where power meets customization!**
+
+### **UPDATES:**
+
+- Added More Executables in `~/bin`.
+- Added Dokr Lang Template in `Command\env\doker_lang`.
+```shell
+      .start ;
+
+      print hello everyone ; 
+
+      input users_name What is your name ; 
+
+      print $(users_name) ; 
+
+      set users_name Hamza ; 
+
+      print $(users_name) ; 
+
+      .end ;
+
+```
+- Added Cali Lang Template in `Command\env\cali_lang`.
+
+- You can find newly added `Torpedo` Module [`here`](/Ju-Hind-F/Command/dmy/modules/torpedo/Torpedo.cs)
+- Updated `@sudev` Command.
+- Added `trash` command line Programming language template, you can see it [`here`](/Ju-Hind-F/Command/env/sudev/sfc.cs)
+ ```shell
+      ls -l -a ; 
+
+      @sudev conf ls ; 
+
+      tree ; 
+
+      cd ../../.. ; 
+
+      ls ; 
+
+      cd ../.. ; 
+
+      ls -l -a ;
+```
+
+- Bug Fixes.
+- Fault Tolerent.
+
 ### 🌟 Overview
 Welcome to the **NovaAssault Shell**—where power meets customization! This innovative shell environment brilliantly merges the capabilities of a programming language with the flexibility of a Bash terminal. Built on the cutting-edge [weapons-grade-virtual-machine](https://github.com/Yuri-Is-On-Rage-Mode/weapons-grade-virtual-machine) VM, NovaAssault Shell delivers a dynamic platform for both scripting and command execution. 🚀💻
 

@@ -49,6 +49,28 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "CsvHelper": {
+              "target": "Package",
+              "version": "[33.0.1, )"
+            },
+            "HtmlAgilityPack": {
+              "target": "Package",
+              "version": "[1.11.66, )"
+            },
+            "MongoDB.Bson": {
+              "target": "Package",
+              "version": "[2.29.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
+            "Tomlyn": {
+              "target": "Package",
+              "version": "[0.17.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

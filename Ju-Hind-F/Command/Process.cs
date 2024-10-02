@@ -4,8 +4,10 @@ using System.Text.Json;
 using System.IO;
 
 using cali.Utils;
+using cali.Command;
 
 using System.Diagnostics;
+using System.ComponentModel.Design;
 
 namespace cali.Command
 {
@@ -17,16 +19,16 @@ namespace cali.Command
 
         public static string CurrentDirDest = UserHomeDir;
 
-        private static string UserHomeDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-        private static string caliEnvDir = Path.Combine(UserHomeDir, "vin_env", "vars");
-        private static string EnvVarsFile = Path.Combine(caliEnvDir, "env_vars.json");
-        private static string AliasesFile = Path.Combine(caliEnvDir, "aliases.json");
+        public static string UserHomeDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        public static string caliEnvDir = Path.Combine(UserHomeDir, "vin_env", "vars");
+        public static string EnvVarsFile = Path.Combine(caliEnvDir, "env_vars.json");
+        public static string AliasesFile = Path.Combine(caliEnvDir, "aliases.json");
 
         public static List<string> DecoraterCommands = new List<string>();
         public static List<string> AlertCommands = new List<string>();
-        private static Dictionary<string, string> EnvironmentVariables = new Dictionary<string, string>();
-        private static Dictionary<string, string> Aliases = new Dictionary<string, string>();
-        private static List<string> CommandHistory = new List<string>();
+        public static Dictionary<string, string> EnvironmentVariables = new Dictionary<string, string>();
+        public static Dictionary<string, string> Aliases = new Dictionary<string, string>();
+        public static List<string> CommandHistory = new List<string>();
 
         static CommandEnv()
         {
@@ -35,10 +37,9 @@ namespace cali.Command
             LoadEnvironmentVariables();
             LoadAliases();
         }
-
         // Ensure the directory and files exist, or create them after Listing an error
         // Ensure the directory and files exist, or create them after Listing an error
-        private static void EnsureEnvironmentSetup()
+        public static void EnsureEnvironmentSetup()
         {
             try
             {
@@ -50,13 +51,13 @@ namespace cali.Command
 
                 if (!File.Exists(EnvVarsFile))
                 {
-                    errs.New("Error: env_vars.json file not Got. Creating file.");
+                    errs.New("Error: env_vars.json file not found. Creating file.");
                     File.WriteAllText(EnvVarsFile, "{}");
                 }
 
                 if (!File.Exists(AliasesFile))
                 {
-                    errs.New("Error: aliases.json file not Got. Creating file.");
+                    errs.New("Error: aliases.json file not found. Creating file.");
                     File.WriteAllText(AliasesFile, "{}");
                 }
 
@@ -70,13 +71,11 @@ namespace cali.Command
                 errs.CacheClean();
             }
         }
-
-        private static void SaveEnvironmentVariables()
+        public static void SaveEnvironmentVariables()
         {
             File.WriteAllText(EnvVarsFile, JsonSerializer.Serialize(EnvironmentVariables, new JsonSerializerOptions { WriteIndented = true }));
         }
-
-        private static void LoadEnvironmentVariables()
+        public static void LoadEnvironmentVariables()
         {
             try
             {
@@ -93,13 +92,11 @@ namespace cali.Command
                 errs.CacheClean();
             }
         }
-
-        private static void SaveAliases()
+        public static void SaveAliases()
         {
             File.WriteAllText(AliasesFile, JsonSerializer.Serialize(Aliases, new JsonSerializerOptions { WriteIndented = true }));
         }
-
-        private static void LoadAliases()
+        public static void LoadAliases()
         {
             try
             {
@@ -116,7 +113,6 @@ namespace cali.Command
                 errs.CacheClean();
             }
         }
-
         public static List<List<string>> DecoCommands(List<string> commands)
         {
             DecoraterCommands.Clear();
@@ -141,7 +137,6 @@ namespace cali.Command
 
             return new List<List<string>> { DecoraterCommands, commands };
         }
-
         public static List<string> SeperateThemCommands(List<string> commands)
         {
             List<string> SepCommands = new List<string>();
@@ -171,36 +166,57 @@ namespace cali.Command
 
             return SepCommands;
         }
-
         public static void ProcessBinCommand(string[] parts)
         {
-            if (parts.Length == 1 && parts[0] == "@bin")
+            if (parts[0] == "@bin")
             {
-                errs.New($"Usage: @bin <command> - Display file contents in binary format");
-                errs.ListThem();
-                errs.CacheClean();
-                return;
-            }
-
-            string executable = parts.Length > 1 ? parts[1] : parts[0];
-            string[] args = parts.Skip(2).ToArray();
-
-            string filePath = $"C:\\Users\\{Environment.UserName}\\vin_env\\bin\\{executable}\\{executable}.exe";
-            try
-            {
-                using (Process process = Process.Start(filePath, string.Join(" ", args)))
+                if (parts.Length == 1 && parts[0] == "@bin")
                 {
-                    process.WaitForExit();
+                    errs.New($"Usage: @bin <command> - Display file contents in binary format");
+                    errs.ListThem();
+                    errs.CacheClean();
+                    return;
+                }
+
+                string executable = parts.Length > 1 ? parts[1] : parts[0];
+                string[] args = parts.Skip(2).ToArray();
+
+                string filePath = $"C:\\Users\\{Environment.UserName}\\vin_env\\bin\\{executable}\\{executable}.exe";
+                try
+                {
+                    using (Process process = Process.Start(filePath, string.Join(" ", args)))
+                    {
+                        process.WaitForExit();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    errs.New($"Error starting process: {ex.Message}");
+                    errs.ListThem();
+                    errs.CacheClean();
                 }
             }
-            catch (Exception ex)
+            else
             {
-                errs.New($"Error starting process: {ex.Message}");
-                errs.ListThem();
-                errs.CacheClean();
+                string executable = parts.Length > 1 ? parts[0] : parts[0];
+                string[] args = parts.Skip(1).ToArray();
+
+                string filePath = $"C:\\Users\\{Environment.UserName}\\vin_env\\bin\\{executable}\\{executable}.exe";
+                try
+                {
+                    using (Process process = Process.Start(filePath, string.Join(" ", args)))
+                    {
+                        process.WaitForExit();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    errs.New($"Error starting process: {ex.Message}");
+                    errs.ListThem();
+                    errs.CacheClean();
+                }
             }
         }
-
         public static void ProcessIbinCommand(string[] parts)
         {
 
@@ -220,7 +236,7 @@ namespace cali.Command
                 //int x = 0;
                 //foreach (var item in parts)
                 //{
-                //    errs.New($"{x}: Expected: `python:abc.py` Got: `{item}`");
+                //    errs.New($"{x}: Expected: `python:abc.py` found: `{item}`");
                 //    x = x + 1;
                 //}
                 errs.ListThem();
@@ -239,7 +255,7 @@ namespace cali.Command
                     //int x = 0;
                     //foreach (var item in parts)
                     //{
-                    //    errs.New($"{x}: Expected: `python:abc.py` Got: `{item}`");
+                    //    errs.New($"{x}: Expected: `python:abc.py` found: `{item}`");
                     //    x = x + 1;
                     //}
                     errs.ListThem();
@@ -260,43 +276,62 @@ namespace cali.Command
                 // Check if the file exists
                 if (!File.Exists(filePath))
                 {
-                    errs.New($"Error: File '{fileName}' not Got in {filePath}");
+                    errs.New($"Error: File '{fileName}' not found in {filePath}");
                     errs.ListThem();
                     errs.CacheClean();
                     return;
                 }
 
-                // Prepare the process to execute the file
-                ProcessStartInfo processStartInfo = new ProcessStartInfo
+                bool noshell = false;
+
+                foreach (var arg in parts)
                 {
-                    FileName = executable,  // e.g., "python"
-                    Arguments = $"\"{filePath}\" " + string.Join(" ", args),  // Script path and arguments
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true
-                };
+                    if (arg.Contains("--no-shell"))
+                    {
+                        arg.Replace("--no-shell", "");
+                        noshell = true;
+                    }
+                }
 
-                // Start the process
-                using (Process process = Process.Start(processStartInfo))
+                if (noshell)
                 {
-                    // Capture the output and error streams
-                    string output = process.StandardOutput.ReadToEnd();
-                    string error = process.StandardError.ReadToEnd();
-                    process.WaitForExit();
-
-                    // Display the output or error
-                    if (!string.IsNullOrEmpty(output))
+                    //arg.Replace("--no-shell", "");
+                    // Prepare the process to execute the file
+                    ProcessStartInfo processStartInfo = new ProcessStartInfo
                     {
-                        Console.WriteLine(output);
-                    }
+                        FileName = executable,  // e.g., "python"
+                        Arguments = $"\"{filePath}\" " + string.Join(" ", args),  // Script path and arguments
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true,
+                        UseShellExecute = false,
+                        CreateNoWindow = true
+                    };
 
-                    if (!string.IsNullOrEmpty(error))
+                    // Start the process
+                    using (Process process = Process.Start(processStartInfo))
                     {
-                        errs.New($"Error: {error}");
-                        errs.ListThem();
-                        errs.CacheClean();
+                        // Capture the output and error streams
+                        string output = process.StandardOutput.ReadToEnd();
+                        string error = process.StandardError.ReadToEnd();
+                        process.WaitForExit();
+
+                        // Display the output or error
+                        if (!string.IsNullOrEmpty(output))
+                        {
+                            Console.WriteLine(output);
+                        }
+
+                        if (!string.IsNullOrEmpty(error))
+                        {
+                            errs.New($"Error: {error}");
+                            errs.ListThem();
+                            errs.CacheClean();
+                        }
                     }
+                }
+                else
+                {
+                    RunOnWindows.RunPythonFile([$"{filePath} " + string.Join(" ", args)]);
                 }
             }
             catch (Exception ex)
@@ -307,8 +342,7 @@ namespace cali.Command
                 errs.CacheClean();
             }
         }
-
-        private static string GetExtension(string executable)
+        public static string GetExtension(string executable)
         {
             switch (executable)
             {
@@ -320,7 +354,6 @@ namespace cali.Command
                     throw new ArgumentException("Unsupported executable");
             }
         }
-
         public static void CommandEnvEach(List<string> commands)
         {
             if (!commands.Any()) { return; }
@@ -335,26 +368,150 @@ namespace cali.Command
                 //// parts = ["@bin", "ls", "--path", "$(BinPath)"];
                 for (int i = 0; i < parts.Length; i++)
                 {
-                    if (parts[i].StartsWith("$("))
+                    if (parts[i].Contains(")."))
                     {
-                        parts[i] = parts[i].Replace("$(", "");
-                        parts[i] = parts[i].Replace(")", "");
-
-                        //Console.WriteLine($":: {parts[i]}");
-
-                        //caliOutput.result(EnvironmentVariables[parts[i]]);
-                        try
+                        if (parts[i].StartsWith("$("))
                         {
-                            parts[i] = parts[i].Replace(parts[i], EnvironmentVariables[parts[i]]);
+                            List<string> OPTS = new List<string>();
+
+                            OPTS = parts[i].Split(".").ToList();
+
+                            var tCmd = OPTS[1];
+
+                            //foreach (var item in OPTS)
+                            //{
+                            //    Console.WriteLine(item);
+                            //}
+
+                            List<string> TotalOpts =
+                            [
+                                "toupper",  // implemented
+                                "tolower",  // implemented
+
+                                "tostring", // implemented
+                                "toint",    // not implemented :: fooling user
+                                "tofloat",  // not implemented :: fooling user
+                                "todouble", // not implemented :: fooling user
+                                "tolong",   // not implemented :: fooling user
+                            ];
+
+                            if (TotalOpts.Contains(tCmd))
+                            {
+                                if (tCmd.ToLower() == "toupper")
+                                {
+                                    //Console.WriteLine($"{tCmd}: Found!");
+                                    {
+                                        parts[i] = parts[i].Replace("$(", "");
+                                        parts[i] = parts[i].Replace(").", "");
+                                        parts[i] = parts[i].Replace($"{tCmd}", "");
+
+                                        //Console.WriteLine($":: {parts[i]}");
+
+                                        //caliOutput.result(EnvironmentVariables[parts[i]]);
+                                        try
+                                        {
+                                            parts[i] = parts[i].Replace(parts[i], EnvironmentVariables[parts[i]]);
+                                            parts[i] = parts[i].ToUpper();
+                                        }
+                                        catch (Exception exept)
+                                        {
+                                            //errs.New(exept.ToString());
+                                            errs.New($"The given key '{parts[i]}' was not present in the env dictionary.");
+                                            errs.ListThem();
+                                            errs.CacheClean();
+                                            return;
+                                        }
+                                    }
+                                }
+                                else if (tCmd.ToLower() == "tolower")
+                                {
+                                    //Console.WriteLine($"{tCmd}: Found!");
+                                    {
+                                        parts[i] = parts[i].Replace("$(", "");
+                                        parts[i] = parts[i].Replace(").", "");
+                                        parts[i] = parts[i].Replace($"{tCmd}", "");
+
+                                        //Console.WriteLine($":: {parts[i]}");
+
+                                        //caliOutput.result(EnvironmentVariables[parts[i]]);
+                                        try
+                                        {
+                                            parts[i] = parts[i].Replace(parts[i], EnvironmentVariables[parts[i]]);
+                                            parts[i] = parts[i].ToLower();
+                                        }
+                                        catch (Exception exept)
+                                        {
+                                            //errs.New(exept.ToString());
+                                            errs.New($"The given key '{parts[i]}' was not present in the env dictionary.");
+                                            errs.ListThem();
+                                            errs.CacheClean();
+                                            return;
+                                        }
+                                    }
+                                }
+                                else if (tCmd.ToLower().StartsWith("to"))
+                                {
+                                    parts[i] = parts[i].Replace("$(", "");
+                                    parts[i] = parts[i].Replace(").", "");
+                                    parts[i] = parts[i].Replace($"{tCmd}", "");
+
+                                    //Console.WriteLine($":: {parts[i]}");
+
+                                    //caliOutput.result(EnvironmentVariables[parts[i]]);
+
+                                    try
+                                    {
+                                        parts[i] = parts[i].Replace(parts[i], EnvironmentVariables[parts[i]]);
+                                    }
+                                    catch (Exception exept)
+                                    {
+                                        //errs.New(exept.ToString());
+                                        errs.New($"The given key '{parts[i]}' was not present in the env dictionary.");
+                                        errs.ListThem();
+                                        errs.CacheClean();
+                                        return;
+                                    }
+
+                                    if (tCmd.ToLower() == "tostring")
+                                    {
+                                        parts[i] = parts[i].ToString();
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                errs.CacheClean();
+                                errs.New($"`{tCmd}` is not a real command in `{parts[i]}`");
+                                errs.ListThem();
+                                return;
+                            }
                         }
-                        catch (Exception exept)
+
+                    }
+                    else
+                    {
+                        if (parts[i].StartsWith("$("))
                         {
-                            //errs.New(exept.ToString());
-                            errs.New($"The given key '{parts[i]}' was not present in the env dictionary.");
-                            errs.ListThem();
-                            errs.CacheClean();
-                            return;
+                            parts[i] = parts[i].Replace("$(", "");
+                            parts[i] = parts[i].Replace(")", "");
+
+                            //Console.WriteLine($":: {parts[i]}");
+
+                            //caliOutput.result(EnvironmentVariables[parts[i]]);
+                            try
+                            {
+                                parts[i] = parts[i].Replace(parts[i], EnvironmentVariables[parts[i]]);
+                            }
+                            catch (Exception exept)
+                            {
+                                //errs.New(exept.ToString());
+                                errs.New($"The given key '{parts[i]}' was not present in the env dictionary.");
+                                errs.ListThem();
+                                errs.CacheClean();
+                                return;
+                            }
                         }
+
                     }
                 }
 
@@ -394,10 +551,14 @@ namespace cali.Command
                         Console.WriteLine(" @encrypt  - Encrypt a file or directory");
                         Console.WriteLine(" @decrypt  - Decrypt a file or directory");
                         Console.WriteLine(" @bin      - Display file contents in binary format");
-                        Console.WriteLine(" @ibin     - Convert binary string back to file");
+                        Console.WriteLine(" @ibin     - Convert binary string back to file, use `--no-shell` to run the script in the shell, it may break your shell, so dont do it");
                         Console.WriteLine(" @cd       - Change the current directory");
                         Console.WriteLine(" @std      - Standard Shell Lib, type `@std #help` for help");
                         Console.ResetColor();
+
+                        Console.WriteLine("\nAlias Commands:");
+
+                        CommandEnvAliasCommand(["@alias","list"]);
 
                         Console.WriteLine("\n!: You can add more commands and aliases! Just explore and have fun!");
                         Console.WriteLine("!: Need more help? Type '@help' anytime!");
@@ -408,8 +569,43 @@ namespace cali.Command
                         ProcessStdCommand(parts);
                         break;
 
+                    case "@dmy":
+                        cali_vm.Command.dmy.modules.usmansploit.ProcessDmyCommand(parts);
+                        break;
+
+                    case "@sudev":
+                        cali_vm.Command.env.sudev.sfc.doit(parts);
+                        break;
+
                     case "@cls":
                         Console.Clear();
+                        break;
+
+                    case "@run":
+                        if (!File.Exists(parts[1]))
+                        {
+                            errs.CacheClean();
+                            errs.New($"Error: `{parts[1]}` file not present.");
+                            errs.ListThem();
+                            errs.CacheClean();
+                        }
+                        else
+                        {
+                            {
+                                IdentifyCommand.CacheClean();
+
+                                List<string> commandsz = UserInput.Prepare(File.ReadAllText(parts[1]));
+
+                                IdentifyCommand.Identify(commandsz);
+                                List<string> parsed_commandsz = IdentifyCommand.ReturnThemPlease();
+
+                                //foreach (string command in parsed_commands) { Console.WriteLine(command); }
+
+                                PleaseCommandEnv.TheseCommands(parsed_commandsz);
+
+                                IdentifyCommand.CacheClean();
+                            }
+                        }
                         break;
 
                     case "@cd":
@@ -447,15 +643,15 @@ namespace cali.Command
                         break;
 
                     default:
-                        errs.New($"Command: `{command}` is not a valid internal command, type `@help` for help!");
-                        errs.ListThem();
-                        errs.CacheClean();
+                        ProcessBinCommand(parts);
+                        //errs.New($"Command: `{command}` is not a valid internal command, type `@help` for help!");
+                        //errs.ListThem();
+                        //errs.CacheClean();
                         break;
                 }
             }
         }
-
-        private static void CommandEnvCdCommand(string[] parts)
+        public static void CommandEnvCdCommand(string[] parts)
         {
             if (parts.Length < 2)
             {
@@ -497,7 +693,7 @@ namespace cali.Command
                 {
                     CurrentDirDest = newDir;
                     Environment.CurrentDirectory = newDir;  // Ensure the process working directory is also updated
-                    Console.WriteLine($"Changed directory to: {CurrentDirDest}");
+                    //Console.WriteLine($"Changed directory to: {CurrentDirDest}");
                 }
                 else
                 {
@@ -513,7 +709,7 @@ namespace cali.Command
                 errs.CacheClean();
             }
         }
-        private static void ProcessStdCommand(string[] parts)
+        public static void ProcessStdCommand(string[] parts)
         {
             if (parts.Length < 2) return;
 
@@ -599,7 +795,7 @@ namespace cali.Command
                 Console.WriteLine($"Error processing command: {ex.Message}");
             }
         }
-        private static void CommandEnvEnvCommand(string[] parts)
+        public static void CommandEnvEnvCommand(string[] parts)
         {
             if (parts.Length < 2) return;
 
@@ -621,7 +817,7 @@ namespace cali.Command
                     }
                     else
                     {
-                        errs.New($"Environment variable '{parts[2]}' not Got.");
+                        errs.New($"Environment variable '{parts[2]}' not found.");
                         errs.ListThem();
                         errs.CacheClean();
                     }
@@ -651,7 +847,7 @@ namespace cali.Command
                         }
                         else
                         {
-                            errs.New($"Environment variable '{parts[2]}' not Got.");
+                            errs.New($"Environment variable '{parts[2]}' not found.");
                             errs.ListThem();
                             errs.CacheClean();
                         }
@@ -664,8 +860,7 @@ namespace cali.Command
                     break;
             }
         }
-
-        private static void CommandEnvAliasCommand(string[] parts)
+        public static void CommandEnvAliasCommand(string[] parts)
         {
             if (parts.Length < 2) return;
 
@@ -695,7 +890,7 @@ namespace cali.Command
                         }
                         else
                         {
-                            errs.New($"Alias '{parts[2]}' not Got.");
+                            errs.New($"Alias '{parts[2]}' not found.");
                             errs.ListThem();
                             errs.CacheClean();
                         }
@@ -725,8 +920,7 @@ namespace cali.Command
                     break;
             }
         }
-
-        private static void CommandEnvHistoryCommand(string[] parts)
+        public static void CommandEnvHistoryCommand(string[] parts)
         {
             if (parts.Length > 1 && parts[1].ToLower() == "clear")
             {
@@ -746,8 +940,7 @@ namespace cali.Command
                         Console.WriteLine($"{i + 1}: {CommandHistory[i]}");
             }
         }
-
-        private static void CommandEnvEncryptionCommand(string[] parts)
+        public static void CommandEnvEncryptionCommand(string[] parts)
         {
             if (parts.Length < 2)
             {
@@ -770,13 +963,12 @@ namespace cali.Command
             }
             else
             {
-                errs.New($"File or directory not Got: {path}");
+                errs.New($"File or directory not found: {path}");
                 errs.ListThem();
                 errs.CacheClean();
             }
         }
-
-        private static void CommandEnvFileEncryption(string filePath, bool isEncrypt)
+        public static void CommandEnvFileEncryption(string filePath, bool isEncrypt)
         {
             try
             {
@@ -816,8 +1008,7 @@ namespace cali.Command
                 errs.CacheClean();
             }
         }
-
-        private static void CommandEnvDirectoryEncryption(string dirPath, bool isEncrypt)
+        public static void CommandEnvDirectoryEncryption(string dirPath, bool isEncrypt)
         {
             try
             {

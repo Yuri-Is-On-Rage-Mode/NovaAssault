@@ -3,9 +3,23 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
-    <RootNamespace>Ju_Hind_F</RootNamespace>
+    <RootNamespace>cali_vm</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Command\env\.ignore\shel-scripting-lang\ByteCodeVM.cs" />
+    <Compile Include="Command\env\.ignore\shel-scripting-lang\ShellCompiler.cs" />
+    <Compile Include="Command\env\.ignore\shel-scripting-lang\Vars.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="33.0.1" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.66" />
+    <PackageReference Include="MongoDB.Bson" Version="2.29.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Tomlyn" Version="0.17.0" />
+  </ItemGroup>
 
 </Project>

@@ -12,3 +12,10 @@ G:\fri3nds\v-category-projects\Developer-Grade-Virtual-OS\Ju-hind-F\Ju-Hind-F\Ju
 G:\fri3nds\v-category-projects\Developer-Grade-Virtual-OS\Ju-hind-F\Ju-Hind-F\Ju-Hind-F\obj\Debug\net8.0\Ju-Hind-F.pdb
 G:\fri3nds\v-category-projects\Developer-Grade-Virtual-OS\Ju-hind-F\Ju-Hind-F\Ju-Hind-F\obj\Debug\net8.0\Ju-Hind-F.genruntimeconfig.cache
 G:\fri3nds\v-category-projects\Developer-Grade-Virtual-OS\Ju-hind-F\Ju-Hind-F\Ju-Hind-F\obj\Debug\net8.0\ref\Ju-Hind-F.dll
+G:\fri3nds\v-category-projects\Developer-Grade-Virtual-OS\Ju-hind-F\Ju-Hind-F\Ju-Hind-F\obj\Debug\net8.0\Ju-Hind-F.csproj.AssemblyReference.cache
+G:\fri3nds\v-category-projects\Developer-Grade-Virtual-OS\Ju-hind-F\Ju-Hind-F\Ju-Hind-F\bin\Debug\net8.0\CsvHelper.dll
+G:\fri3nds\v-category-projects\Developer-Grade-Virtual-OS\Ju-hind-F\Ju-Hind-F\Ju-Hind-F\bin\Debug\net8.0\HtmlAgilityPack.dll
+G:\fri3nds\v-category-projects\Developer-Grade-Virtual-OS\Ju-hind-F\Ju-Hind-F\Ju-Hind-F\bin\Debug\net8.0\MongoDB.Bson.dll
+G:\fri3nds\v-category-projects\Developer-Grade-Virtual-OS\Ju-hind-F\Ju-Hind-F\Ju-Hind-F\bin\Debug\net8.0\Newtonsoft.Json.dll
+G:\fri3nds\v-category-projects\Developer-Grade-Virtual-OS\Ju-hind-F\Ju-Hind-F\Ju-Hind-F\bin\Debug\net8.0\Tomlyn.dll
+G:\fri3nds\v-category-projects\Developer-Grade-Virtual-OS\Ju-hind-F\Ju-Hind-F\Ju-Hind-F\obj\Debug\net8.0\Ju-Hind-F.csproj.Up2Date

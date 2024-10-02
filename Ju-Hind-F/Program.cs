@@ -9,6 +9,7 @@ using System.Collections;
 using cali.Utils;
 using cali.Command;
 using cali.Command.env;
+using System.Runtime.ExceptionServices;
 //using cali.Tests;
 
 namespace caliVirtualOS
@@ -56,23 +57,59 @@ namespace caliVirtualOS
             //}
             //Console.ReadLine();
             //goto abc;
-        #endregion
+            #endregion
 
-        #region Actual Init
+            //RunOnWindows.RunPythonFile(["C:\\Users\\Hamza\\vin_env\\ibin\\python\\usmnh\\tabl.py"]);
+            //Environment.Exit(0);
+
+            //{
+            //    List<string> commands = UserInput.Prepare("@sudev do run d:G:\\fri3nds\\v-category-projects\\Developer-Grade-Virtual-OS\\Ju-hind-F\\Ju-Hind-F\\Ju-Hind-F\\Command\\env\\doker_lang\\test.dokr");
+
+            //    IdentifyCommand.Identify(commands);
+            //    List<string> parsed_commands = IdentifyCommand.ReturnThemPlease();
+
+            //    PleaseCommandEnv.TheseCommands(parsed_commands);
+
+            //    IdentifyCommand.CacheClean();
+
+            //    Environment.Exit(0);
+            //}
+
+            //{
+            //    cali_vm.Command.env.doker_lang.Interpreter.Interpret.Helper.ThisCode();
+
+
+            //    Environment.Exit(0);
+
+            //}
+
+            #region Actual Init
+
+            cali_vm.Command.dmy.modules.usmansploit.Mods = cali_vm.Command.dmy.modules.DmyInit.Init();
 
         a:
+            try
+            {
+                
+                DesignFormat.TakeInput([$"\n{CommandEnv.CURRENT_USER_NAME}", "@", "cali-VM", ": ", $"{cali.Command.CommandEnv.CurrentDirDest}", " $ "]);
 
-            DesignFormat.TakeInput([$"\n{CommandEnv.CURRENT_USER_NAME}", "@", "cali-VM", ": ", $"{cali.Command.CommandEnv.CurrentDirDest}", " $ "]);
+                List<string> commands = UserInput.Prepare(UserInput.Input());
 
-            List<string> commands = UserInput.Prepare(UserInput.Input());
+                IdentifyCommand.Identify(commands);
+                List<string> parsed_commands = IdentifyCommand.ReturnThemPlease();
 
-            IdentifyCommand.Identify(commands);
-            List<string> parsed_commands = IdentifyCommand.ReturnThemPlease();
+                PleaseCommandEnv.TheseCommands(parsed_commands);
 
-            PleaseCommandEnv.TheseCommands(parsed_commands);
-
-            IdentifyCommand.CacheClean();
-            goto a;
+                IdentifyCommand.CacheClean();
+                goto a;
+            }
+            catch (Exception exp) // makethis to tolarate CTRL+C and do not quit!!!!
+            {
+                errs.CacheClean();
+                errs.New(exp.ToString());
+                errs.ListThem();
+                goto a;
+            }
 
             #endregion
         }
